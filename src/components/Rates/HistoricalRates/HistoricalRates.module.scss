@@ -1,0 +1,53 @@
+.historicalRates {
+  text-align: center;
+  width: 100%;
+  position: relative;
+  table-layout: fixed;
+
+  @media screen and (max-width: 440px) {
+    margin-bottom: 15px;
+  }
+
+  & thead {
+    position: sticky;
+    top: 0;
+    z-index: 12;
+    background: #1c1c1c;
+    box-shadow: inset 0px 5px 10px -10px #fff;
+
+    @media screen and (max-width: 440px) {
+      box-shadow: none;
+    }
+
+    & th {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      color: #878787;
+      padding: 1rem;
+
+      @media screen and (max-width: 440px) {
+        font-size: 12px;
+        box-shadow: none;
+        padding: 1rem 0;
+      }
+    }
+  }
+
+  & tbody {
+    box-shadow: inset 0px -5px 10px -10px #fff;
+
+    @media screen and (max-width: 440px) {
+      box-shadow: none;
+    }
+  }
+}
+
+.preloader {
+  @media screen and (max-width: 440px) {
+    padding-top: 1rem;
+    padding-bottom: 0rem;
+  }
+
+  padding-bottom: 1rem;
+}

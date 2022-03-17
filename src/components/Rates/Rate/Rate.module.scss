@@ -1,0 +1,93 @@
+.rate {
+  cursor: pointer;
+  background: #1c1c1c;
+  margin-bottom: 15px;
+
+  &:hover {
+    transform: scale(1.005);
+    box-shadow: 0px 0px 13px -10px #fff;
+  }
+
+  @media screen and (max-width: 440px) {
+    display: block;
+    width: 100%;
+  }
+
+  & td {
+    padding: 1rem 2rem;
+
+    @media screen and (max-width: 440px) {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      padding: 1rem;
+      padding-left: 50%;
+      border: 1px solid #080808;
+
+      &::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 1rem;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        color: #878787;
+        text-align: left;
+      }
+    }
+  }
+}
+
+.currency {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  @media screen and (max-width: 440px) {
+    gap: 10px;
+  }
+}
+
+.flag {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  @media screen and (max-width: 440px) {
+    order: 1;
+  }
+}
+
+.value {
+  position: relative;
+  text-align: center;
+}
+
+.nominal {
+  position: absolute;
+  top: 10px;
+  padding: 0 5px;
+  font-size: 10px;
+  color: #878787;
+
+  @media screen and (max-width: 440px) {
+    top: 0px;
+    right: 0px;
+  }
+}
+
+.change {
+  text-align: right;
+
+  &.positive {
+    color: #4fdfb1;
+  }
+
+  &.negative {
+    color: #ed5b75;
+  }
+}

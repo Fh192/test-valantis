@@ -1,0 +1,62 @@
+.rates {
+  max-width: 600px;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: #1c1c1c;
+  gap: 10px;
+  padding: 10px 0;
+
+  @media screen and (max-width: 440px) {
+    background: none;
+  }
+
+  & .thead {
+    position: sticky;
+    top: 0;
+    background: #1c1c1c;
+    z-index: 10;
+
+    @media screen and (max-width: 440px) {
+      display: none;
+    }
+
+    & tr {
+      & th:nth-child(2) {
+        text-align: center;
+      }
+
+      & th:nth-child(3) {
+        text-align: right;
+      }
+    }
+
+    & th {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      color: #878787;
+      padding: 1rem 2rem;
+    }
+  }
+
+  .tbody {
+    @media screen and (max-width: 440px) {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.preloader {
+  @media screen and (max-width: 440px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & td {
+    padding-bottom: 1rem;
+  }
+}

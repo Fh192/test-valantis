@@ -1,0 +1,1 @@
+export { getPercentageDifference } from './getPercentageDifference';

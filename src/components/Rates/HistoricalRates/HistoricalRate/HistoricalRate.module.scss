@@ -1,0 +1,27 @@
+.historicalRate {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+
+  @media screen and (max-width: 440px) {
+    font-size: 11px;
+    background: #1c1c1c;
+    margin-bottom: 15px;
+  }
+
+  & td {
+    padding: 1rem 0.5rem;
+  }
+}
+
+.change {
+  text-align: center;
+
+  &.positive {
+    color: #4fdfb1;
+  }
+
+  &.negative {
+    color: #ed5b75;
+  }
+}
