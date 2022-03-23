@@ -4,9 +4,11 @@ import { currencyAPI } from '../../api/currencyAPI';
 import { IHistoricalRate, IRate } from './../../types/currency';
 
 const initialState = {
-  prevISOdate: '' as string,
+  prevISOdate: '',
   rates: [] as IRate[],
   historicalRates: [] as IHistoricalRate[][],
+  isHistoricalRatesFetching: false,
+  isRatesFetching: false,
 };
 
 export const getRates = createAsyncThunk<
@@ -27,14 +29,13 @@ export const getRates = createAsyncThunk<
 });
 
 export const getHistoricalRates = createAsyncThunk<
-  IHistoricalRate[][],
+  void,
   number | undefined,
-  { state: RootState; rejectValue: string }
+  { state: RootState; rejectValue: string; dispatch: RootDispatch }
 >(
   'currency/getHistoricalRates',
-  async (days = 10, { getState, rejectWithValue }) => {
+  async (days = 10, { getState, rejectWithValue, dispatch }) => {
     try {
-      const historicalRates: IHistoricalRate[][] = [];
       let prevISODate = getState().currency.prevISOdate;
 
       for (let i = 0; i < days; i++) {
@@ -42,15 +43,14 @@ export const getHistoricalRates = createAsyncThunk<
         const { PreviousDate, Date, Valute } = await currencyAPI.historical(
           prevDate
         );
-        const currencies = Object.values(Valute);
+        const rates = Object.values(Valute).map(currency => ({
+          ...currency,
+          Date,
+        }));
 
-        historicalRates.push(
-          currencies.map(currency => ({ ...currency, Date }))
-        );
+        dispatch(setHistoricalRates(rates));
         prevISODate = PreviousDate;
       }
-
-      return historicalRates;
     } catch (err) {
       return rejectWithValue('Handle error here');
     }
@@ -64,16 +64,29 @@ export const currencySlice = createSlice({
     setPrevISODate: (state, action: PayloadAction<string>) => {
       state.prevISOdate = action.payload;
     },
+
+    setHistoricalRates: (state, action: PayloadAction<IHistoricalRate[]>) => {
+      state.historicalRates.push(action.payload);
+    },
   },
   extraReducers: b => {
     b.addCase(getRates.fulfilled, (state, action) => {
       state.rates = action.payload;
+      state.isRatesFetching = false;
     });
 
-    b.addCase(getHistoricalRates.fulfilled, (state, action) => {
-      state.historicalRates = action.payload;
+    b.addCase(getRates.pending, state => {
+      state.isRatesFetching = true;
+    });
+
+    b.addCase(getHistoricalRates.fulfilled, state => {
+      state.isHistoricalRatesFetching = false;
+    });
+
+    b.addCase(getHistoricalRates.pending, state => {
+      state.isHistoricalRatesFetching = true;
     });
   },
 });
 
-export const { setPrevISODate } = currencySlice.actions;
+export const { setPrevISODate, setHistoricalRates } = currencySlice.actions;

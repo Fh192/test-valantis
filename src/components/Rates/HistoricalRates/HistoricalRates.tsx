@@ -10,7 +10,9 @@ interface Props {
 }
 
 export const HistoricalRates: React.FC<Props> = ({ CharCode }) => {
-  const { historicalRates } = useSelector(s => s.currency);
+  const { historicalRates, isHistoricalRatesFetching } = useSelector(
+    s => s.currency
+  );
   const rates = historicalRates
     .map(rates => rates.find(rate => rate.CharCode === CharCode))
     .filter((item): item is IHistoricalRate => !!item);
@@ -25,11 +27,11 @@ export const HistoricalRates: React.FC<Props> = ({ CharCode }) => {
         </tr>
       </thead>
       <tbody>
-        {rates.length ? (
-          rates.map(rate => (
-            <HistoricalRate {...rate} key={rate.ID + rate.Date} />
-          ))
-        ) : (
+        {rates.map(rate => (
+          <HistoricalRate {...rate} key={rate.ID + rate.Date} />
+        ))}
+        
+        {isHistoricalRatesFetching && (
           <tr>
             <td className={styles.preloader} colSpan={3}>
               <Preloader size='40px' />

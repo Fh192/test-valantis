@@ -10,7 +10,7 @@ import styles from './Rates.module.scss';
 
 export const Rates: React.FC = () => {
   const dispatch = useDispatch();
-  const { rates } = useSelector(s => s.currency);
+  const { rates, isRatesFetching } = useSelector(s => s.currency);
 
   useEffect(() => {
     dispatch(getRates()).then(() => {
@@ -28,9 +28,11 @@ export const Rates: React.FC = () => {
         </tr>
       </thead>
       <tbody className={styles.tbody}>
-        {rates.length ? (
-          rates.map(rate => <Rate {...rate} key={rate.ID} />)
-        ) : (
+        {rates.map(rate => (
+          <Rate {...rate} key={rate.ID} />
+        ))}
+        
+        {isRatesFetching && (
           <tr className={styles.preloader}>
             <td colSpan={3}>
               <Preloader size='40px' />
